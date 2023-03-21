@@ -13,11 +13,11 @@ declare(strict_types=1);
  * указывая пространство имен
  */
 spl_autoload_register(function (string $namespace) {
-    // в $namespace приходит полное название класса MyAwesomeNamespace\ExampleClass
+    // в $namespace приходит полное название класса
     $classesDir = __DIR__ . '/src/';
 
-    /* так как уже обозначено, что в src лежит MyAwesomeNamespace\ExampleClass , то мне нужно из полного пространства
-    имен убрать MyAwesomeNamespace\ExampleClass */
+    /* так как уже обозначено, что в src лежит MyAwesomeNamespace , то мне нужно из полного пространства имен
+    убрать MyAwesomeNamespace\ */
     $namespaceFromSrc = str_replace("MyAwesomeNamespace\\", "", $namespace);
 
     // Теперь я должен убрать заменить символ "\" на символ "/", чтобы использовать полный путь к файлу
@@ -27,5 +27,8 @@ spl_autoload_register(function (string $namespace) {
     require_once $classesDir . $fileName;
 });
 
+// Тут в функцию автозагрузки будет передана строка "MyAwesomeNamespace\ExampleClass"
 $exampleClass = new \MyAwesomeNamespace\ExampleClass();
+
+// Тут в функцию автозагрузки будет передана строка "MyAwesomeNamespace\AwesomeDirectory\ClassInDirectory"
 $exampleClass = new \MyAwesomeNamespace\AwesomeDirectory\ClassInDirectory();
